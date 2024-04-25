@@ -3,7 +3,7 @@ import { CohereEmbeddings } from "@langchain/cohere";
 import { PineconeStore } from 'langchain/vectorstores/pinecone';
 import { pinecone } from '@/utils/pinecone-client';
 import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
-import { PINECONE_INDEX_NAME, PINECONE_NAME_SPACE } from '@/config/pinecone';
+import { PINECONE_INDEX_NAME, skillpediapi } from '@/config/pinecone';
 import { COHERE_API_KEY, COHERE_API_KEY } from '@/config/pinecone';
 import { DirectoryLoader } from 'langchain/document_loaders/fs/directory';
 
@@ -37,12 +37,12 @@ export const run = async () => {
        apiKey: COHERE_API_KEY,  // In Node.js defaults to process.env.COHERE_API_KEY
        batchSize: 48, // Default value if omitted is 48. Max value is 96
      });
-    const index = pinecone.Index(PINECONE_INDEX_NAME); //change to your own index name
+    const index = pinecone.Index(skillpediapi); //change to your own index name
 
     //embed the PDF documents
     await PineconeStore.fromDocuments(docs, embeddings, {
       pineconeIndex: index,
-      namespace: PINECONE_NAME_SPACE,
+      namespace: skillpediapi,
       textKey: 'text',
     });
   } catch (error) {
